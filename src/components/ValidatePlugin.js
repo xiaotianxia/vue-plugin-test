@@ -52,9 +52,15 @@ validatePlugin.install = function (Vue) {
 
         function validateRrquired ($item, validator) {
             let inputType = $item[0].type;
-            if(inputType === 'checkbox' && $item[0].checked) {
-                removeValidateTips($item);
-                return true;
+            if(inputType === 'checkbox') {
+                if($item[0].checked) {
+                    removeValidateTips($item);
+                    return true;
+                } else {
+                    console.log(11);
+                    showValidateTips($item, validator);
+                    return false;
+                }
             }
             let value = $.trim($item.val());
             if(value === '') {
@@ -96,8 +102,8 @@ validatePlugin.install = function (Vue) {
         }
 
         function showValidateTips ($item, validator) {
-            let $tip = $item.parent().find('.validate-tip'),
-                tip = '❌';
+            let $tip = $item.parents('.form-item').find('.validate-tip'),
+                tip = '<em class="icon-error" style="margin-right: 5px;font-style: normal;">❌</em>';
             switch(validator.type) {
                 case 'required':
                 case 'length':
@@ -108,12 +114,15 @@ validatePlugin.install = function (Vue) {
                     console.log(33);
             }
 
-            $tip.html(tip).show();
+            $tip.removeClass('validate-tip-error validate-tip-success')
+                .addClass('validate-tip-error')
+                .html(tip).show();
         }
 
         function removeValidateTips ($item) {
             let $tip = $item.parents('.form-item').find('.validate-tip');
-            $tip.html('✅').show();
+            $tip.removeClass('validate-tip-error validate-tip-success')
+                .addClass('validate-tip-success').html('<em class="icon-success" style="margin-right: 5px;font-style: normal;">✅</em>').show();
         }
     }
 }

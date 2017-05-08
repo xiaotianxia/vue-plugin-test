@@ -12,7 +12,7 @@
         </div>
         <div class="form-item">
             <span class="from-key">国籍：</span>
-            <select class="validate-item-nation" :value="nation">
+            <select class="validate-item validate-item-nation" :value="nation">
                 <option value=""></option>
                 <option value="1">中国</option>
                 <option value="2">美国</option>
@@ -143,5 +143,56 @@ export default {
 </script>
 
 <style scoped>
-
+    .form {
+        width: 400px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: auto auto;
+        font-size: 14px;
+    }
+    .form-item {
+        line-height: 25px;
+        margin: 10px 0;
+    }
+    .form-item span {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .from-key {
+        display: inline-block;
+        width: 70px;
+    }
+    .validate-item {
+        width: 150px;
+        height: 25px;
+        line-height: 25px;
+        padding: 0 10px;
+        border-radius: 5px;
+        outline: none;
+        border: 1px solid #aaa;
+        vertical-align: middle;
+    }
+    select.validate-item {
+        width: 160px;
+        height: 27px;
+    }
+    .validate-item[type=radio],
+    .validate-item[type=checkbox] {
+        width: auto;
+        height: auto;
+    }
+    .validate-tip {
+        margin-left: 10px;
+        font-size: 12px;
+    }
+    .validate-tip em {
+        margin-right: 5px;
+        font-style: normal;
+    }
+    .validate-tip-error {
+        color: #f00;
+    }
+    .validate-tip-success {
+        color: #0f0;
+    }
 </style>
