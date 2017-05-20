@@ -48,7 +48,7 @@
             <span class="validate-tip"></span>
         </div>
         <div class="form-item">
-            <button @click="onClick">提交</button>
+            <button class="validate-item validate-item-submit">提交</button>
         </div>
     </div>
 </template>
@@ -173,7 +173,7 @@ export default {
         vertical-align: middle;
     }
     select.validate-item {
-        width: 160px;
+        width: 172px;
         height: 27px;
     }
     .validate-item[type=radio],

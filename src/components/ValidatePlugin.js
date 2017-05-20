@@ -1,7 +1,6 @@
 import $ from 'jquery';
-//*TODO checkbox
 /* ajax
-** 提交
+** 提交 根据validateData现实所有错误并阻止提交
 ** 显示后台错误信息
 ** 。。。。
 */
@@ -14,8 +13,10 @@ let EVENT_CONFIG = {
 };
 validatePlugin.install = function (Vue) {
     Vue.prototype.$validateForm = function (formSelector, options) {
-        let $form = $(formSelector),
+        let validateData = [],
+            $form = $(formSelector),
             items = options.items;
+        bindSubmitEvent();
         for(let i = 0, len = items.length; i < len; i ++) {
             bindEvent(items[i]);
         }
@@ -24,10 +25,18 @@ validatePlugin.install = function (Vue) {
             let type = EVENT_CONFIG[item.type];
             for(let i = 0, len = type.length; i < len; i ++) {
                 let $item = $form.find('.validate-item-' + item.name);
+                console.log('bind');
                 $item.on(type[i], function() {
                     validateItem($(this), item.validators);
                 })
             }
+        }
+
+        function bindSubmitEvent () {
+            let $submitBtn = $form.find('.validate-item-submit');
+            $submitBtn.on('click', function() {
+                console.log('submit');
+            })
         }
 
         function validateItem ($item, validators) {
@@ -53,11 +62,16 @@ validatePlugin.install = function (Vue) {
         function validateRrquired ($item, validator) {
             let inputType = $item[0].type;
             if(inputType === 'checkbox') {
-                if($item[0].checked) {
+                let $parent = $item.parents('.form-item'),
+                    checkboxs = Array.from($parent.find('input[type=checkbox]')),
+                    checked = false;
+                checkboxs.forEach(function(item) {
+                    checked = checked || item.checked;
+                });
+                if(checked) {
                     removeValidateTips($item);
                     return true;
                 } else {
-                    console.log(11);
                     showValidateTips($item, validator);
                     return false;
                 }
